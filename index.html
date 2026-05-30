@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffe4ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>FitAndra Premium V6</title>
+<style>
+:root{--pink:#ff5c93;--pink2:#ff9bc5;--rose:#ffd1e2;--soft:#fff7fb;--text:#321827;--muted:#8b6475;--green:#22c55e;--gold:#f7c948;--purple:#7c3aed}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#fff0f6,#ffe4ef);color:var(--text)}
+header{position:sticky;top:0;z-index:20;background:#fff7fbf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--rose);padding:calc(12px + env(safe-area-inset-top)) 16px 12px}
+h1{margin:0;font-size:25px} h2{margin:8px 0 12px} small,.muted{color:var(--muted)} .wrap{max-width:980px;margin:auto;padding:14px}
+.card{background:white;border:1px solid var(--rose);border-radius:26px;padding:16px;margin:12px 0;box-shadow:0 12px 32px #c2185b18}
+.hero{background:linear-gradient(135deg,var(--pink),#ffb3cf);color:white;border-radius:30px;padding:24px;box-shadow:0 16px 36px #ff5c9340}
+button{width:100%;border:0;border-radius:19px;padding:15px;font-size:16px;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--pink2));color:white;margin:6px 0;box-shadow:0 8px 18px #ff5c9330}
+button.secondary{background:white;color:var(--text);border:1px solid var(--rose);box-shadow:none} button.green{background:var(--green);color:#06210e} button.gold{background:var(--gold);color:#3a2b00} button.purple{background:var(--purple);color:white}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px} .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px} @media(max-width:720px){.row,.row3{grid-template-columns:1fr}}
+.pill{display:inline-block;border-radius:999px;padding:8px 12px;margin:4px;font-weight:900;background:#ffe4ef;color:#be185d;border:1px solid var(--rose)} .pill.green{background:#dcfce7;color:#166534} .pill.gold{background:#fff7db;color:#8a6a00} .pill.purple{background:#ede9fe;color:#5b21b6}
+.progress{height:17px;background:#ffe4ef;border-radius:999px;overflow:hidden;margin:10px 0} .bar{height:100%;background:linear-gradient(90deg,var(--pink),var(--gold));width:0;transition:.25s}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px} .day{aspect-ratio:1/1;border-radius:14px;background:#fff0f6;border:1px solid var(--rose);display:flex;align-items:center;justify-content:center;font-weight:900;color:#b66a8a} .done{background:var(--green)!important;color:#06210e!important} .today{outline:3px solid var(--pink)}
+.hidden{display:none} .stage{background:linear-gradient(135deg,#ff8fbd,#ffd1e2);color:#741238;border-radius:24px;padding:16px;text-align:center;font-weight:900;font-size:22px;margin:12px 0}
+.visual{height:230px;border:1px solid var(--rose);background:linear-gradient(#fff,#fff7fb);border-radius:26px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.visual .girl{width:90px;height:150px;border-radius:45px 45px 30px 30px;background:linear-gradient(#ffb3cf,#ff5c93);position:relative;animation:pulse 1s infinite ease-in-out}
+.visual .girl:before{content:'👩🏻‍🦱';position:absolute;top:-42px;left:18px;font-size:46px} .visual .label{position:absolute;bottom:12px;color:#8b6475;font-weight:900}
+@keyframes pulse{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(12px) rotate(2deg)}}
+.exercise{text-align:center;background:var(--soft);border:1px solid var(--rose);border-radius:24px;padding:15px;margin:10px 0} .ex-title{font-size:26px;font-weight:900}
+.counter{font-size:52px;font-weight:900;color:#be185d;text-align:center;margin:8px} .pause{font-size:48px;font-weight:900;color:#166534;text-align:center;margin:8px}
+.steps{text-align:left;background:white;border:1px solid var(--rose);border-radius:18px;padding:13px;line-height:1.55;margin-top:10px}
+.stat{background:#fff7fb;border:1px solid var(--rose);border-radius:18px;padding:14px;text-align:center;font-weight:900} .stat div{font-size:28px}
+.warn{font-size:12px;color:#8a1748;background:#fff0f6;border:1px solid var(--rose);border-radius:16px;padding:11px;line-height:1.35}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<header><h1>🌸 FitAndra Premium V6</h1><small>36 exerciții · 32 antrenamente · post-partum</small></header>
+<div class="wrap">
+
+<div id="home">
+ <div class="hero"><h2>Bună, Andra ❤️</h2><div>25 minute pentru fesieri, core blând și energie.</div></div>
+ <div class="card">
+  <h2>Astăzi</h2>
+  <span class="pill" id="week"></span><span class="pill green" id="done"></span><span class="pill gold" id="badge"></span>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <p class="muted" id="msg"></p>
+  <button onclick="startToday()">START ANTRENAMENT</button>
+  <div class="row"><button class="secondary" onclick="showPlan()">Program săptămână</button><button class="secondary" onclick="showStats()">Statistici</button></div>
+ </div>
+ <div class="card">
+  <h2>Calendar manual</h2><small>Apasă pe o zi ca să o marchezi/anulezi.</small><div class="calendar" id="cal"></div>
+ </div>
+ <div class="card warn">Program blând post-partum. Dacă apare durere, amețeală, presiune pelvină sau disconfort în zona operației, oprește antrenamentul.</div>
+</div>
+
+<div id="plan" class="hidden"><div class="card"><h2 id="planTitle"></h2><div id="planBody"></div><button class="secondary" onclick="goHome()">Înapoi</button></div></div>
+
+<div id="stats" class="hidden"><div class="card">
+ <h2>Statistici</h2>
+ <div class="row3">
+  <div class="stat"><div id="sTotal">0</div><small>Total</small></div>
+  <div class="stat"><div id="sStreak">0</div><small>Streak</small></div>
+  <div class="stat"><div id="sPercent">0%</div><small>100 antrenamente</small></div>
+ </div>
+ <h2>Medalii</h2><div style="font-size:42px;text-align:center" id="big">🌱</div><p class="muted">10 🥉 Bronz · 25 🥈 Argint · 50 🥇 Aur · 100 👑 Regină</p>
+ <button class="secondary" onclick="goHome()">Înapoi</button>
+</div></div>
+
+<div id="workout" class="hidden"><div class="card">
+ <div class="stage" id="title"></div>
+ <div class="progress"><div class="bar" id="wbar"></div></div>
+ <div class="visual"><div class="girl" id="girl"></div><div class="label" id="visualLabel"></div></div>
+ <div class="exercise"><div class="ex-title" id="name"></div><p id="details"></p><small id="tip"></small><div class="steps" id="equip"></div></div>
+ <div class="counter" id="counter">0</div>
+ <div class="row"><button class="green" id="countBtn" onclick="toggleAutoCount()">START NUMĂRARE</button><button class="secondary" onclick="manualRep()">+1 REP</button></div>
+ <div class="row"><button class="secondary" onclick="pauseExercise()">⏸️ PAUZĂ</button><button class="secondary" onclick="resumeExercise()">▶️ REIA</button></div>
+ <div class="row"><button onclick="finishExercise()">AM TERMINAT</button><button class="secondary" onclick="skipExercise()">SAR PESTE</button></div>
+ <p class="muted" id="pauseStatus" style="text-align:center"></p>
+</div></div>
+
+<div id="pause" class="hidden"><div class="card"><div class="stage">Pauză 30 secunde</div><div class="pause" id="pauseNum">30</div><p class="muted" style="text-align:center">Respiră. Următorul exercițiu vine imediat.</p><button onclick="endPause()">Sari peste pauză</button></div></div>
+
+<div id="finish" class="hidden"><div class="card"><div class="stage">🎉 Bravo, Andra!</div><h2>Ai terminat antrenamentul.</h2><p>❤️ Încă un antrenament bifat.</p><button onclick="completeWorkout()">Salvează antrenamentul</button></div></div>
+
+<div class="footer">FitAndra Premium V6 · făcut cu dragoste</div>
+</div>
+
+<script>
+const STORE='fitandra_premium_v6';
+const EX={"breath": ["Respirație diafragmatică", "Core post-partum", 8, 3, "Fără echipament", "Inspiră în abdomen, expiră lent și activează ușor core-ul."], "heel": ["Heel Slides", "Core post-partum", 10, 2, "Fără echipament", "Alunecă piciorul lent, fără să forțezi abdomenul."], "toe": ["Toe Taps", "Core post-partum", 10, 2, "Fără echipament", "Lombarul lipit de sol, mișcare mică și controlată."], "deadbug": ["Dead Bug", "Core post-partum", 10, 3, "Fără echipament", "Braț și picior opus, lent."], "birddog": ["Bird Dog", "Core post-partum", 10, 3, "Fără echipament", "Menține echilibrul, fără balans."], "marching": ["Marching", "Core post-partum", 12, 2, "Fără echipament", "Ridică alternativ genunchii, abdomen ușor activ."], "marchbridge": ["Marching Bridge", "Core post-partum", 10, 3, "Fără echipament", "Din pod fesier, ridică alternativ câte un picior."], "modplank": ["Plank modificat", "Core post-partum", 25, 1, "Fără echipament", "Pe genunchi, corp drept, respiră."], "sideplank": ["Side Plank modificat", "Core post-partum", 20, 1, "Fără echipament", "Pe genunchi, lateral, fără durere."], "corehold": ["Core Hold ușor", "Core post-partum", 20, 1, "Fără echipament", "Ține abdomenul activ ușor, fără presiune."], "pelvic": ["Pelvic Tilt", "Core post-partum", 12, 2, "Fără echipament", "Mișcare mică a bazinului, controlată."], "catcow": ["Cat-Cow", "Mobilitate", 10, 3, "Fără echipament", "Mobilizează spatele, respiră lent."], "glute": ["Glute Bridge", "Fesieri", 15, 2, "Fără echipament", "Strânge fesierii sus o secundă."], "frog": ["Frog Pumps", "Fesieri", 18, 1.5, "Fără echipament", "Tălpile lipite, mișcare scurtă pentru fesieri."], "clamshell": ["Clamshell", "Fesieri", 15, 2, "Bandă opțional", "Genunchii se deschid lateral, șoldul stabil."], "donkey": ["Donkey Kicks", "Fesieri", 12, 2, "Fără echipament", "Împinge călcâiul sus, fără arcuire excesivă."], "fire": ["Fire Hydrants", "Fesieri", 12, 2, "Fără echipament", "Ridică genunchiul lateral, bazin stabil."], "abduction": ["Hip Abduction", "Fesieri", 15, 2, "Bandă opțional", "Ridică piciorul lateral controlat."], "squat": ["Squat controlat", "Fesieri", 12, 2, "Gantere opțional", "Coboară ca pe scaun."], "sumo": ["Sumo Squat", "Fesieri", 12, 2, "Gantere opțional", "Picioare mai depărtate, genunchii spre exterior."], "pulse": ["Pulse Squat", "Fesieri", 15, 1.5, "Fără echipament", "Mișcare mică jos, fără sărituri."], "revlunge": ["Reverse Lunge", "Fesieri", 10, 2, "Fără echipament", "Pas înapoi, control."], "wallsit": ["Wall Sit", "Fesieri", 25, 1, "Perete", "Spatele pe perete, ține poziția."], "singlebridge": ["Single Leg Bridge", "Fesieri", 10, 2.5, "Fără echipament", "Un picior ridicat, bazin stabil."], "pullapart": ["Band Pull Apart", "Bandă", 15, 2, "Bandă elastică", "Deschide brațele lateral, umerii jos."], "lateralwalk": ["Lateral Walk", "Bandă", 12, 2, "Bandă elastică", "Pași laterali mici, tensiune în bandă."], "monster": ["Monster Walk", "Bandă", 12, 2, "Bandă elastică", "Pași diagonali, genunchii ușor îndoiți."], "standrow": ["Standing Row cu bandă", "Bandă", 15, 2, "Bandă elastică", "Trage coatele în spate."], "facepull": ["Face Pull cu bandă", "Bandă", 15, 2, "Bandă elastică", "Trage spre față, coatele sus."], "bandsquat": ["Band Squat", "Bandă", 12, 2, "Bandă elastică", "Genuflexiune cu bandă, genunchii stabili."], "dbrow": ["Dumbbell Row", "Gantere", 12, 2, "2 gantere ușoare", "Trage coatele în spate."], "shoulder": ["Shoulder Press", "Gantere", 10, 2, "2 gantere ușoare", "Împinge sus, greutate mică."], "rdl": ["Romanian Deadlift ușor", "Gantere", 12, 2, "2 gantere ușoare", "Șoldul în spate, spatele drept."], "curl": ["Biceps Curl", "Gantere", 12, 2, "2 gantere ușoare", "Coatele lângă corp."], "stretch": ["Stretching Full Body", "Mobilitate", 30, 1, "Fără echipament", "Respirație lentă, fără forțare."], "child": ["Child Pose Flow", "Mobilitate", 30, 1, "Fără echipament", "Relaxare, întinde spatele ușor."]};
+const W=[[["breath", "heel", "glute", "clamshell", "deadbug", "stretch"], ["frog", "pullapart", "shoulder", "sideplank", "child", "catcow"], ["squat", "marchbridge", "deadbug", "fire", "rdl", "stretch"], ["lateralwalk", "birddog", "glute", "sideplank", "curl", "child"]], [["pelvic", "toe", "frog", "clamshell", "birddog", "stretch"], ["pullapart", "dbrow", "shoulder", "heel", "sideplank", "child"], ["sumo", "marchbridge", "deadbug", "donkey", "rdl", "catcow"], ["monster", "glute", "corehold", "abduction", "curl", "stretch"]], [["breath", "singlebridge", "toe", "fire", "modplank", "child"], ["dbrow", "facepull", "shoulder", "birddog", "stretch", "catcow"], ["bandsquat", "glute", "deadbug", "donkey", "rdl", "stretch"], ["lateralwalk", "pelvic", "clamshell", "sideplank", "curl", "child"]], [["heel", "frog", "deadbug", "abduction", "catcow", "stretch"], ["pullapart", "dbrow", "shoulder", "corehold", "child", "breath"], ["squat", "marchbridge", "toe", "fire", "rdl", "stretch"], ["monster", "birddog", "glute", "sideplank", "curl", "catcow"]], [["breath", "glute", "heel", "clamshell", "modplank", "stretch"], ["standrow", "shoulder", "pullapart", "deadbug", "child", "catcow"], ["sumo", "singlebridge", "birddog", "donkey", "rdl", "stretch"], ["lateralwalk", "frog", "pelvic", "sideplank", "curl", "child"]], [["toe", "marchbridge", "fire", "deadbug", "stretch", "breath"], ["dbrow", "facepull", "shoulder", "corehold", "catcow", "child"], ["bandsquat", "glute", "clamshell", "rdl", "heel", "stretch"], ["monster", "birddog", "singlebridge", "sideplank", "curl", "child"]], [["pelvic", "frog", "toe", "abduction", "modplank", "stretch"], ["pullapart", "dbrow", "shoulder", "birddog", "catcow", "child"], ["squat", "marchbridge", "fire", "deadbug", "rdl", "stretch"], ["lateralwalk", "glute", "corehold", "sideplank", "curl", "breath"]], [["breath", "singlebridge", "heel", "clamshell", "deadbug", "stretch"], ["standrow", "facepull", "shoulder", "birddog", "child", "catcow"], ["sumo", "glute", "toe", "donkey", "rdl", "stretch"], ["monster", "frog", "sideplank", "curl", "pelvic", "child"]]];
+let state={done:[],total:0,start:null,sound:true,vibe:true};
+let workout=[],idx=0,label='',rep=0,autoTimer=null,pauseTimer=null,pauseLeft=30,isPaused=false,autoRunning=false;
+
+function load(){try{let s=localStorage.getItem(STORE);if(s)state=JSON.parse(s)}catch(e){} if(!state.start)state.start=new Date().toISOString().slice(0,10); save(); renderHome();}
+function save(){localStorage.setItem(STORE,JSON.stringify(state))} function today(){return new Date().toISOString().slice(0,10)}
+function wi(){let d=Math.floor((new Date(today())-new Date(state.start))/86400000);return Math.floor(Math.max(0,d)/7)%8} function di(){return state.total%4}
+function badge(){let t=state.total;if(t>=100)return['👑','Regină','Ai terminat provocarea de 100 antrenamente!'];if(t>=50)return['🥇','Aur','Mai ai '+(100-t)+' până la Regină.'];if(t>=25)return['🥈','Argint','Mai ai '+(50-t)+' până la Aur.'];if(t>=10)return['🥉','Bronz','Mai ai '+(25-t)+' până la Argint.'];return['🌱','Start','Mai ai '+(10-t)+' antrenamente până la Bronz.']}
+function renderHome(){document.getElementById('week').innerText='Săptămâna '+(wi()+1)+'/8 · Ziua '+(di()+1)+'/4';document.getElementById('done').innerText=state.total+' antrenamente';let b=badge();document.getElementById('badge').innerText=b[1];document.getElementById('msg').innerText=b[2];document.getElementById('bar').style.width=Math.min(100,state.total)+'%';cal();}
+function cal(){let c=document.getElementById('cal');c.innerHTML='';let n=new Date(),y=n.getFullYear(),m=n.getMonth(),f=new Date(y,m,1),last=new Date(y,m+1,0).getDate(),pad=(f.getDay()+6)%7;for(let i=0;i<pad;i++)c.innerHTML+='<div></div>';for(let d=1;d<=last;d++){let iso=new Date(y,m,d).toISOString().slice(0,10),cl='day';if(state.done.includes(iso))cl+=' done';if(iso===today())cl+=' today';c.innerHTML+=`<div class="${cl}" onclick="toggleDay('${iso}')">${d}</div>`}}
+function toggleDay(iso){let i=state.done.indexOf(iso);if(i>=0){state.done.splice(i,1);state.total=Math.max(0,state.total-1)}else{state.done.push(iso);state.total++}save();renderHome();}
+function hide(){['home','plan','stats','workout','pause','finish'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
+function goHome(){stopAll();hide();document.getElementById('home').classList.remove('hidden');renderHome();}
+function showPlan(){hide();document.getElementById('plan').classList.remove('hidden');let w=wi();document.getElementById('planTitle').innerText='Săptămâna '+(w+1)+'/8';let h='';W[w].forEach((day,i)=>{h+=`<div class="exercise"><h3>Ziua ${i+1}</h3>${day.map(k=>'• '+EX[k][0]+' <small>('+EX[k][1]+')</small>').join('<br>')}</div>`});document.getElementById('planBody').innerHTML=h;}
+function streak(){let set=new Set(state.done);let count=0;let d=new Date(today());for(let i=0;i<365;i++){let iso=d.toISOString().slice(0,10);if(set.has(iso)){count++;d.setDate(d.getDate()-1)}else break}return count}
+function showStats(){hide();document.getElementById('stats').classList.remove('hidden');document.getElementById('sTotal').innerText=state.total;document.getElementById('sStreak').innerText=streak();document.getElementById('sPercent').innerText=Math.min(100,state.total)+'%';document.getElementById('big').innerText=badge()[0];}
+function startToday(){let old=localStorage.getItem('fitandra_v6_current');if(old&&confirm('Ai un antrenament început. Continui de unde ai rămas?')){try{let o=JSON.parse(old);workout=o.workout;idx=o.idx;label=o.label;rep=o.rep||0;showEx();return}catch(e){}}let w=wi(),d=di();workout=W[w][d];idx=0;rep=0;label='Săptămâna '+(w+1)+' · Ziua '+(d+1);showEx();}
+function saveCurrent(){if(workout.length)localStorage.setItem('fitandra_v6_current',JSON.stringify({workout,idx,label,rep}))} function clearCurrent(){localStorage.removeItem('fitandra_v6_current')}
+function showEx(){stopAll();hide();document.getElementById('workout').classList.remove('hidden');let k=workout[idx],e=EX[k];document.getElementById('title').innerText=label+' · Exercițiul '+(idx+1)+'/'+workout.length;document.getElementById('wbar').style.width=((idx)/workout.length*100)+'%';document.getElementById('name').innerText=e[0];document.getElementById('details').innerText=e[2]+' repetări / secunde țintă';document.getElementById('tip').innerText=e[5];document.getElementById('equip').innerHTML='<b>Categorie:</b> '+e[1]+'<br><b>Echipament:</b> '+e[4]+'<br><b>Sfat:</b> '+e[5];document.getElementById('visualLabel').innerText=e[0];document.getElementById('counter').innerText=rep+' / '+e[2];saveCurrent();}
+function manualRep(){let e=EX[workout[idx]];rep++;repTick();document.getElementById('counter').innerText=rep+' / '+e[2];saveCurrent();if(rep>=e[2]){finishDing();finishExercise();}}
+function toggleAutoCount(){if(autoRunning)pauseExercise();else{resumeExercise();startAutoCount();}}
+function startAutoCount(){stopAuto();autoRunning=true;isPaused=false;document.getElementById('countBtn').innerText='⏸️ PAUZĂ NUMĂRARE';let e=EX[workout[idx]],target=e[2],rhythm=e[3]*500;autoTimer=setInterval(()=>{if(isPaused)return;rep++;repTick();document.getElementById('counter').innerText=rep+' / '+target;saveCurrent();if(rep>=target){finishDing();finishExercise();}},rhythm);}
+function pauseExercise(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;autoRunning=false;isPaused=true;document.getElementById('countBtn').innerText='REIA NUMĂRAREA';document.getElementById('pauseStatus').innerText='Pauză activă. Poți relua când vrei.';saveCurrent();}
+function resumeExercise(){isPaused=false;document.getElementById('pauseStatus').innerText='';saveCurrent();}
+function stopAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;autoRunning=false;let b=document.getElementById('countBtn');if(b)b.innerText='START NUMĂRARE'}
+function stopAll(){stopAuto();if(pauseTimer)clearInterval(pauseTimer);pauseTimer=null;}
+function finishExercise(){stopAuto();idx++;rep=0;saveCurrent();if(idx>=workout.length){clearCurrent();hide();document.getElementById('finish').classList.remove('hidden')}else startPause();}
+function skipExercise(){finishExercise();}
+function startPause(){pauseLeft=30;hide();document.getElementById('pause').classList.remove('hidden');document.getElementById('pauseNum').innerText=pauseLeft;pauseTimer=setInterval(()=>{pauseLeft--;document.getElementById('pauseNum').innerText=pauseLeft;if(pauseLeft<=0){pauseBeeps();endPause();}},1000);}
+function endPause(){if(pauseTimer)clearInterval(pauseTimer);pauseTimer=null;showEx();}
+function completeWorkout(){clearCurrent();finishDing();let t=today();if(!state.done.includes(t)){state.done.push(t);state.total++;}save();goHome();}
+
+let audioCtx=null;function audio(){try{if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx}catch(e){return null}}
+function tone(f=700,d=0.06,gain=.04,type='sine'){let ctx=audio();if(!ctx)return;let o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=f;o.type=type;g.gain.value=gain;o.connect(g);g.connect(ctx.destination);o.start();setTimeout(()=>{try{o.stop()}catch(e){}},d*1000);}
+function repTick(){tone(820,.045,.035)} function finishDing(){if(navigator.vibrate)navigator.vibrate([120,60,120]);tone(660,.1,.05);setTimeout(()=>tone(920,.14,.055),120)} function pauseBeeps(){tone(650,.08,.04,'square');setTimeout(()=>tone(650,.08,.04,'square'),180);setTimeout(()=>tone(900,.12,.05,'square'),360)}
+
+load();
+</script>
+</body>
+</html>
